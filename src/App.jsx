@@ -11,7 +11,7 @@ const basename =
 export default function App() {
   return (
     <BrowserRouter basename={basename}>
-      <div className="flex min-h-screen flex-col bg-slate-50">
+      <div className="flex min-h-screen flex-col bg-zinc-950">
         <NavBar />
         <main className="flex-1">
           <Routes>
@@ -21,7 +21,7 @@ export default function App() {
             <Route path="/data" element={<Data />} />
           </Routes>
         </main>
-        <footer className="border-t border-slate-200 bg-white py-5 text-center text-sm text-slate-500">
+        <footer className="border-t border-zinc-800 bg-zinc-900/80 py-5 text-center text-sm text-zinc-500">
           Interactive essay — real-world powerlessness and virtual agency
         </footer>
       </div>

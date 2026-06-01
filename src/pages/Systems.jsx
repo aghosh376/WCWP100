@@ -2,72 +2,56 @@ export default function Systems() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
       <header className="mb-10 text-center">
-        <p className="font-mono text-xs uppercase tracking-widest text-indigo-700">The Systems</p>
-        <h1 className="mt-2 font-serif text-3xl font-bold text-slate-900 sm:text-4xl">
+        <p className="font-mono text-xs uppercase tracking-widest text-violet-400">The Systems</p>
+        <h1 className="mt-2 font-serif text-3xl font-bold text-zinc-50 sm:text-4xl">
           Two architectures of experience
         </h1>
       </header>
 
-      <div className="grid min-h-[480px] gap-0 overflow-hidden rounded-xl border border-slate-300 shadow-lg lg:grid-cols-2">
-        <section className="border-b border-slate-400 bg-slate-200 p-8 lg:border-b-0 lg:border-r-2 lg:border-r-slate-500">
-          <div className="mb-4 inline-block border-2 border-slate-600 bg-slate-300 px-3 py-1 font-mono text-xs uppercase text-slate-700">
-            Column 1
-          </div>
-          <h2 className="font-serif text-2xl font-bold uppercase tracking-tight text-slate-800">
+      <div className="grid min-h-[480px] gap-0 overflow-hidden rounded-xl border border-zinc-700 shadow-xl lg:grid-cols-2">
+        <section className="border-b border-zinc-600 bg-zinc-300 p-8 lg:border-b-0 lg:border-r-2 lg:border-r-zinc-600">
+          <h2 className="font-serif text-2xl font-bold uppercase tracking-tight text-zinc-800">
             The Real-World Lockdown
           </h2>
-          <div className="mt-6 space-y-3 border-l-4 border-slate-600 pl-4">
-            <p className="text-sm leading-relaxed text-slate-700">
-              Paste your essay text here. Bureaucracy, surveillance schools, credential gates, and
-              economic precarity compress youth into procedures they did not design. Agency becomes
-              permission granted by institutions—not built by the young person.
+          <div className="mt-6 space-y-3 border-l-4 border-zinc-600 pl-4">
+            <p className="text-sm leading-relaxed text-zinc-700">
+              Young people enter a physical world defined by overwhelming precarity and fundamentally broken economic and political systems. Rather than building their own agency, they graduate under immense pressure only to be met with rigid structures like a rigged housing market and seemingly endless global crises. This consistent radiation of hopelessness creates profound "errand paralysis." When institutional rules and bureaucratic systems offer zero systemic feedback or tangible returns on investment, real world effort begins to feel like an insurmountable chore.
             </p>
             <div className="grid grid-cols-2 gap-2 pt-2">
-              <div className="border border-slate-500 bg-slate-300 p-3 text-xs font-mono uppercase text-slate-600">
-                Schedule
-              </div>
-              <div className="border border-slate-500 bg-slate-300 p-3 text-xs font-mono uppercase text-slate-600">
-                Rules
-              </div>
-              <div className="border border-slate-500 bg-slate-300 p-3 text-xs font-mono uppercase text-slate-600">
-                Appeals
-              </div>
-              <div className="border border-slate-500 bg-slate-300 p-3 text-xs font-mono uppercase text-slate-600">
-                Debt
-              </div>
+              {['Schedule', 'Rules', 'Appeals', 'Debt'].map((label) => (
+                <div
+                  key={label}
+                  className="border border-zinc-500 bg-zinc-400/80 p-3 text-xs font-mono uppercase text-zinc-700"
+                >
+                  {label}
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        <section className="bg-gradient-to-br from-indigo-950 to-violet-900 p-8 text-white">
-          <div className="mb-4 inline-block rounded-lg border border-amber-400/50 bg-amber-500/20 px-3 py-1 font-mono text-xs uppercase text-amber-200">
-            Column 2
-          </div>
+        <section className="bg-gradient-to-br from-violet-950 to-indigo-950 p-8 text-white">
           <h2 className="font-serif text-2xl font-bold text-amber-100">
             Children Yearn for the Mines
           </h2>
           <div className="mt-6 space-y-4">
-            <p className="text-sm leading-relaxed text-indigo-100">
-              Paste your essay text here. Games offer legible work—grind, skill, loot—with visible
-              returns on labor. Mastery is achievable; the feedback loop is fair enough to feel
-              earned. The mine is clarity: effort maps to outcome in ways school and job markets
-              often refuse to guarantee.
+            <p className="text-sm leading-relaxed text-violet-100">
+              In stark contrast to a stagnant reality, digital environments provide what the physical world currently lacks: clear goals, immediate feedback loops, and a concrete sense of purpose. Young people are not retreating into games out of laziness; they are actively seeking out intentionally stressful and challenging work because it is presented within a perfect meritocracy. When a player puts in the effort, a number goes up, a sound plays, and the environment reflects an immediate, proportional change. We channel our inherent human drive into these digital sandboxes simply because they guarantee a fair and visible return on our labor.
             </p>
             <ul className="space-y-2">
               {['Accessible hard work', 'Clear mastery curves', 'Visible ROI on time'].map((item) => (
                 <li
                   key={item}
-                  className="flex items-center gap-2 rounded-lg border border-indigo-400/40 bg-indigo-900/50 px-3 py-2 text-sm"
+                  className="flex items-center gap-2 rounded-lg border border-violet-500/40 bg-violet-900/40 px-3 py-2 text-sm text-violet-50"
                 >
                   <span className="text-amber-400">◆</span>
                   {item}
                 </li>
               ))}
             </ul>
-            <div className="mt-4 h-2 overflow-hidden rounded-full bg-indigo-800">
+            <div className="mt-4 h-2 overflow-hidden rounded-full bg-violet-900">
               <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-amber-500 to-emerald-400" />
             </div>
-            <p className="font-mono text-xs text-indigo-300">Progress bar — always visible</p>
           </div>
         </section>
       </div>

@@ -9,12 +9,15 @@ const links = [
 
 export default function NavBar() {
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-md">
       <nav
         className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-3 sm:px-6"
         aria-label="Main navigation"
       >
-        <NavLink to="/" className="font-serif text-lg font-semibold tracking-tight text-slate-900">
+        <NavLink
+          to="/"
+          className="font-serif text-lg font-semibold tracking-tight text-zinc-100"
+        >
           Virtual Agency
         </NavLink>
         <ul className="flex flex-wrap gap-1">
@@ -26,8 +29,8 @@ export default function NavBar() {
                 className={({ isActive }) =>
                   `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-slate-900 text-white'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                      ? 'bg-violet-600 text-white'
+                      : 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100'
                   }`
                 }
               >
