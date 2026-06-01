@@ -21,8 +21,8 @@ Output is in `dist/`. For **GitHub Pages** project sites, set `base` in `vite.co
 
 ```
 src/
-  components/   NavBar, HeroSection, CharacterCreatorTrap
-  pages/        Home, Relevancy, Systems, Data
+  components/   NavBar.jsx, CharacterCreatorTrap.jsx
+  pages/        Home.jsx, Relevancy.jsx, Systems.jsx, Data.jsx
   data/         chart-placeholder.json (wire into Data page later)
 public/
   images/       hero-tension.jpg (replace with your photo)

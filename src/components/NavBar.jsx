@@ -1,33 +1,33 @@
 import { NavLink } from 'react-router-dom'
 
-const tabs = [
+const links = [
   { to: '/', label: 'Home', end: true },
   { to: '/relevancy', label: 'Relevancy' },
-  { to: '/systems', label: 'Systems' },
+  { to: '/systems', label: 'The Systems' },
   { to: '/data', label: 'Data' },
 ]
 
 export default function NavBar() {
   return (
-    <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-white/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm">
       <nav
-        className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6"
-        aria-label="Main"
+        className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-3 sm:px-6"
+        aria-label="Main navigation"
       >
-        <span className="font-serif text-lg font-bold tracking-tight text-stone-900 sm:text-xl">
-          Agency<span className="text-violet-700">/</span>Sold
-        </span>
-        <ul className="flex flex-wrap items-center gap-1 sm:gap-2">
-          {tabs.map(({ to, label, end }) => (
+        <NavLink to="/" className="font-serif text-lg font-semibold tracking-tight text-slate-900">
+          Virtual Agency
+        </NavLink>
+        <ul className="flex flex-wrap gap-1">
+          {links.map(({ to, label, end }) => (
             <li key={to}>
               <NavLink
                 to={to}
                 end={end}
                 className={({ isActive }) =>
-                  `rounded-lg px-3 py-2 text-sm font-medium transition-colors sm:px-4 ${
+                  `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-stone-900 text-white'
-                      : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900'
+                      ? 'bg-slate-900 text-white'
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                   }`
                 }
               >

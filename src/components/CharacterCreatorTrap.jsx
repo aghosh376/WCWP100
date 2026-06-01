@@ -12,62 +12,64 @@ const TOTAL_POINTS = 20
 const initialStats = () =>
   Object.fromEntries(STAT_KEYS.map((key) => [key, 0]))
 
-function StatAllocator({ stats, onChange, disabled }) {
+function StatAllocator({ stats, onChange }) {
   const spent = Object.values(stats).reduce((a, b) => a + b, 0)
-  const remaining = TOTAL_POINTS - spent
+  const available = TOTAL_POINTS - spent
 
   const adjust = (key, delta) => {
     const next = stats[key] + delta
-    if (next < 0 || next > 10) return
-    if (delta > 0 && remaining <= 0) return
+    if (next < 0) return
+    if (delta > 0 && available <= 0) return
     onChange({ ...stats, [key]: next })
   }
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between rounded-lg bg-violet-950/50 px-4 py-2 font-mono text-sm">
-        <span className="text-violet-200">Points remaining</span>
+      <div className="flex items-center justify-between rounded-lg border border-indigo-400/40 bg-indigo-950/60 px-4 py-3">
+        <span className="text-sm font-medium text-indigo-200">Available Points</span>
         <span
-          className={`text-xl font-bold tabular-nums ${
-            remaining === 0 ? 'text-emerald-400' : 'text-amber-300'
+          className={`font-mono text-2xl font-bold tabular-nums ${
+            available === 0 ? 'text-emerald-400' : 'text-amber-300'
           }`}
         >
-          {remaining}
+          {available}
         </span>
       </div>
+
       {STAT_KEYS.map((key) => (
-        <div key={key} className="rounded-xl border border-violet-500/30 bg-violet-950/30 p-4">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="font-semibold text-violet-100">{STAT_LABELS[key]}</span>
-            <span className="font-mono text-2xl font-bold text-amber-300 tabular-nums">
-              {stats[key]}
-            </span>
+        <div
+          key={key}
+          className="rounded-xl border border-indigo-500/30 bg-slate-900/80 p-4 shadow-inner"
+        >
+          <div className="mb-3 flex items-center justify-between">
+            <span className="font-semibold text-indigo-100">{STAT_LABELS[key]}</span>
+            <span className="font-mono text-xl font-bold text-amber-300">{stats[key]}</span>
           </div>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-3">
             <button
               type="button"
-              disabled={disabled || stats[key] <= 0}
               onClick={() => adjust(key, -1)}
-              className="flex h-10 w-10 items-center justify-center rounded-lg bg-stone-800 text-lg font-bold text-white transition hover:bg-stone-700 disabled:cursor-not-allowed disabled:opacity-40"
+              disabled={stats[key] <= 0}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-slate-700 text-xl font-bold text-white hover:bg-slate-600 disabled:cursor-not-allowed disabled:opacity-30"
               aria-label={`Decrease ${STAT_LABELS[key]}`}
             >
               −
             </button>
-            <div className="flex flex-1 gap-1">
+            <div className="flex h-3 flex-1 gap-0.5 overflow-hidden rounded-full bg-slate-800">
               {Array.from({ length: 10 }).map((_, i) => (
                 <div
                   key={i}
-                  className={`h-10 flex-1 rounded-sm transition-colors ${
-                    i < stats[key] ? 'bg-gradient-to-t from-amber-600 to-amber-400' : 'bg-stone-800'
+                  className={`flex-1 transition-colors ${
+                    i < stats[key] ? 'bg-gradient-to-t from-amber-500 to-amber-300' : 'bg-slate-700'
                   }`}
                 />
               ))}
             </div>
             <button
               type="button"
-              disabled={disabled || stats[key] >= 10 || remaining <= 0}
               onClick={() => adjust(key, 1)}
-              className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-600 text-lg font-bold text-white transition hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-40"
+              disabled={available <= 0}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-xl font-bold text-white hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-30"
               aria-label={`Increase ${STAT_LABELS[key]}`}
             >
               +
@@ -81,20 +83,17 @@ function StatAllocator({ stats, onChange, disabled }) {
 
 function GrayedStatsPanel({ stats }) {
   return (
-    <aside className="w-full shrink-0 border-l border-stone-300 bg-stone-100 p-6 lg:w-56">
-      <h3 className="mb-4 font-mono text-xs uppercase tracking-wider text-stone-500">
-        Your build
-      </h3>
-      <p className="mb-4 text-xs leading-relaxed text-stone-400">
-        These stats no longer apply.
-      </p>
-      <ul className="space-y-3">
+    <aside className="w-full border-t border-slate-300 bg-slate-100 p-6 lg:w-52 lg:border-t-0 lg:border-l">
+      <h3 className="font-mono text-xs uppercase tracking-widest text-slate-500">Your stats</h3>
+      <p className="mt-2 text-xs text-slate-400">No effect in this system.</p>
+      <ul className="mt-4 space-y-3">
         {STAT_KEYS.map((key) => (
-          <li key={key} className="flex justify-between text-stone-400">
+          <li
+            key={key}
+            className="flex justify-between rounded border border-slate-200 bg-slate-200/80 px-3 py-2 text-slate-400"
+          >
             <span className="text-sm">{STAT_LABELS[key]}</span>
-            <span className="font-mono text-sm line-through decoration-stone-400">
-              {stats[key]}
-            </span>
+            <span className="font-mono text-sm line-through opacity-60">{stats[key]}</span>
           </li>
         ))}
       </ul>
@@ -104,76 +103,74 @@ function GrayedStatsPanel({ stats }) {
 
 function BureaucraticForm() {
   return (
-    <div className="flex-1 bg-stone-200 p-6 sm:p-10">
-      <div className="mx-auto max-w-md rounded border border-stone-400 bg-stone-100 p-8 shadow-inner">
-        <p className="mb-1 font-mono text-xs text-stone-500">FORM 14-B / REV. 2003</p>
-        <h2 className="mb-6 border-b border-stone-400 pb-2 font-serif text-xl text-stone-700">
-          Standard Compliance Registration
-        </h2>
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-          <label className="block">
-            <span className="mb-1 block text-xs font-medium uppercase text-stone-500">
-              Legal name (as on file)
-            </span>
+    <div className="flex-1 bg-slate-300 p-6 sm:p-10">
+      <div className="mx-auto max-w-lg border-2 border-slate-500 bg-slate-200 p-8 shadow-none">
+        <p className="font-mono text-xs text-slate-600">DEPARTMENT FORM 7-C</p>
+        <h3 className="mt-1 border-b-2 border-slate-500 pb-2 font-serif text-lg text-slate-700">
+          Mandatory Participation Record
+        </h3>
+        <div className="mt-6 space-y-4">
+          <div>
+            <label className="block font-mono text-xs uppercase text-slate-600">Full legal name</label>
             <input
-              type="text"
               disabled
+              className="mt-1 w-full border border-slate-500 bg-slate-300 px-2 py-2 text-slate-500"
               placeholder="—"
-              className="w-full cursor-not-allowed border border-stone-400 bg-stone-300 px-3 py-2 text-stone-500"
             />
-          </label>
-          <label className="block">
-            <span className="mb-1 block text-xs font-medium uppercase text-stone-500">
-              Student / minor ID
-            </span>
+          </div>
+          <div>
+            <label className="block font-mono text-xs uppercase text-slate-600">ID number</label>
             <input
-              type="text"
               disabled
+              className="mt-1 w-full border border-slate-500 bg-slate-300 px-2 py-2 text-slate-500"
               placeholder="—"
-              className="w-full cursor-not-allowed border border-stone-400 bg-stone-300 px-3 py-2 text-stone-500"
             />
-          </label>
-          <label className="block">
-            <span className="mb-1 block text-xs font-medium uppercase text-stone-500">
-              Acknowledgment of institutional authority
-            </span>
-            <input
-              type="checkbox"
-              disabled
-              className="cursor-not-allowed accent-stone-500"
-            />
-            <span className="ml-2 text-sm text-stone-500">I understand my options are limited.</span>
-          </label>
+          </div>
+          <div className="flex items-start gap-2 text-sm text-slate-600">
+            <input type="checkbox" disabled className="mt-1" />
+            <span>I acknowledge that prior selections are not considered.</span>
+          </div>
           <button
             type="button"
             disabled
-            className="mt-6 w-full cursor-not-allowed border-2 border-stone-500 bg-stone-400 py-3 font-mono text-sm font-bold uppercase tracking-widest text-stone-600"
+            className="mt-4 w-full cursor-not-allowed border-2 border-slate-600 bg-slate-400 py-3 font-mono text-sm font-bold uppercase tracking-widest text-slate-600"
           >
             Comply
           </button>
-        </form>
-        <p className="mt-4 text-center text-xs text-stone-500">
-          Submission does not guarantee outcome.
-        </p>
+        </div>
       </div>
     </div>
   )
 }
 
 export default function CharacterCreatorTrap() {
-  const [phase, setPhase] = useState('creator')
+  const [phase, setPhase] = useState('illusion')
   const [stats, setStats] = useState(initialStats)
 
   const spent = Object.values(stats).reduce((a, b) => a + b, 0)
   const canStart = spent === TOTAL_POINTS
 
+  const handleReset = () => {
+    setPhase('illusion')
+    setStats(initialStats())
+  }
+
   if (phase === 'trap') {
     return (
-      <section className="overflow-hidden rounded-2xl border border-stone-300 shadow-xl">
-        <div className="border-b border-stone-300 bg-stone-300 px-4 py-2 text-center font-mono text-xs uppercase tracking-widest text-stone-600">
-          Welcome to the real system
+      <section className="overflow-hidden rounded-xl border border-slate-400 bg-slate-200 shadow-md">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-400 bg-slate-300 px-4 py-2">
+          <p className="font-mono text-xs uppercase tracking-widest text-slate-600">
+            The trap — real-world interface
+          </p>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="rounded border border-slate-500 bg-white px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50"
+          >
+            Reset
+          </button>
         </div>
-        <div className="flex min-h-[420px] flex-col lg:flex-row">
+        <div className="flex min-h-[400px] flex-col lg:flex-row">
           <BureaucraticForm />
           <GrayedStatsPanel stats={stats} />
         </div>
@@ -182,43 +179,28 @@ export default function CharacterCreatorTrap() {
   }
 
   return (
-    <section className="overflow-hidden rounded-2xl border-2 border-violet-500/50 bg-gradient-to-b from-violet-950 to-stone-900 shadow-xl shadow-violet-900/30">
-      <div className="border-b border-violet-500/30 bg-violet-900/40 px-6 py-4">
-        <h2 className="font-serif text-2xl font-bold text-white">
-          The Character Creator Trap
-        </h2>
-        <p className="mt-1 text-sm text-violet-200">
-          Allocate {TOTAL_POINTS} points. Feel powerful. Then press start.
+    <section className="overflow-hidden rounded-xl border-2 border-indigo-500/60 bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 shadow-xl">
+      <div className="border-b border-indigo-500/40 bg-indigo-900/50 px-6 py-4">
+        <h2 className="font-serif text-2xl font-bold text-white">The Character Creator Trap</h2>
+        <p className="mt-1 text-sm text-indigo-200">
+          State 1: The illusion — distribute {TOTAL_POINTS} points, then start.
         </p>
       </div>
-      <div className="grid gap-8 p-6 lg:grid-cols-[1fr_auto] lg:p-8">
-        <div>
-          <div className="mb-6 flex items-center gap-4 rounded-xl border border-amber-500/40 bg-amber-950/30 p-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-amber-500 text-2xl">
-              ⚔
-            </div>
-            <div>
-              <p className="font-mono text-xs uppercase text-amber-400">Class</p>
-              <p className="text-lg font-bold text-white">Unbound Initiate</p>
-            </div>
-          </div>
-          <StatAllocator stats={stats} onChange={setStats} disabled={false} />
-        </div>
-        <div className="flex flex-col justify-end">
-          <button
-            type="button"
-            onClick={() => setPhase('trap')}
-            disabled={!canStart}
-            className="w-full rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 px-8 py-4 text-lg font-bold uppercase tracking-wide text-stone-900 shadow-lg shadow-amber-500/30 transition hover:from-amber-400 hover:to-amber-300 disabled:cursor-not-allowed disabled:from-stone-600 disabled:to-stone-600 disabled:text-stone-400 disabled:shadow-none lg:w-auto"
-          >
-            Start Game
-          </button>
-          {!canStart && (
-            <p className="mt-2 text-center text-xs text-violet-300">
-              Spend all {TOTAL_POINTS} points to continue
-            </p>
-          )}
-        </div>
+      <div className="space-y-6 p-6 sm:p-8">
+        <StatAllocator stats={stats} onChange={setStats} />
+        <button
+          type="button"
+          onClick={() => setPhase('trap')}
+          disabled={!canStart}
+          className="w-full rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200 py-4 text-lg font-bold uppercase tracking-wider text-slate-900 shadow-lg shadow-amber-500/25 transition hover:brightness-105 disabled:cursor-not-allowed disabled:from-slate-600 disabled:to-slate-600 disabled:text-slate-400 disabled:shadow-none"
+        >
+          Start Game
+        </button>
+        {!canStart && (
+          <p className="text-center text-xs text-indigo-300">
+            Use all {TOTAL_POINTS} available points to enable Start Game.
+          </p>
+        )}
       </div>
     </section>
   )
