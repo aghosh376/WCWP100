@@ -1,0 +1,14 @@
+{
+  "globalRevenue": [
+    { "label": "2020", "value": 78, "max": 100 },
+    { "label": "2022", "value": 92, "max": 100 },
+    { "label": "2024", "value": 100, "max": 100 },
+    { "label": "2026 (proj.)", "value": 108, "max": 120 }
+  ],
+  "agencyProducts": [
+    { "label": "Cosmetics", "value": 72, "max": 100 },
+    { "label": "Battle passes", "value": 58, "max": 100 },
+    { "label": "Loot / gacha", "value": 45, "max": 100 },
+    { "label": "Pay-to-skip", "value": 38, "max": 100 }
+  ]
+}
