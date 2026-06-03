@@ -5,5 +5,5 @@ import tailwindcss from '@tailwindcss/vite'
 // For GitHub Pages project sites, set base to '/your-repo-name/'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/',
+  base: '/WCWP100/',
 })
